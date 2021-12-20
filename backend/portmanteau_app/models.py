@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 
 # user-defined categories containing clothing items
 class Capsule(models.Model):
+  #items = models.ForeignKey(Item, related_name='capsules')
   name = models.CharField(max_length=64)
   description = models.TextField()
   user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='capsules')
@@ -30,11 +31,12 @@ class Weather(models.Model):
 
 # the actual item of clothing itself
 class Item(models.Model):
-  capsules = models.ManyToManyField(Capsule, related_name='items')
-  type = models.ForeignKey(Type, on_delete=models.CASCADE, related_name='items')
-  weather = models.ForeignKey(Weather, on_delete=models.CASCADE, related_name='items', null=True, blank=True)
+  capsule = models.ForeignKey(Capsule, on_delete=models.CASCADE, related_name='items', null=True, blank=True)
+  type = models.ForeignKey(Type, on_delete=models.SET_DEFAULT, related_name='items', default=1)
+  weather = models.ForeignKey(Weather, on_delete=models.SET_NULL, related_name='items', null=True, blank=True)
   color_pattern = models.CharField(max_length=100)
   brand = models.CharField(max_length=64, null=True, blank=True)
+  # user will upload photo to cloudinary, its url will be stored here
   image_url = models.URLField(null=True, blank=True)
 
   def __str__(self):

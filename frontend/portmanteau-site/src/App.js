@@ -13,7 +13,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route exact path="/" element={<HomePage />} />
-          <Route exact path="/capsule-list" element={<CapsuleListPage />} />
+          <Route exact path="/capsule-list/" element={<CapsuleListPage />} />
           <Route exact path="/capsule-list/:capsuleID" element={<CapsuleDetailPage />} />
           <Route exact path="/capsule-list/:capsuleID/item-detail/:itemID" element={<ItemDetailPage />} />
 
