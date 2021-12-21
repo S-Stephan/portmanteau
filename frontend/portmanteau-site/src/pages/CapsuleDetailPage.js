@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 // api
 import portmanteauAPI from "../api/portmanteauAPI"
@@ -33,7 +33,9 @@ const CapsuleDetailPage = (props) => {
       <hr/>
       <p>It's (insert weather here) today! Would you like your (insert clothing items here)?</p>
       <hr />
+      {capsuleDetails && <Link to={`/capsule-list/${params.capsuleID}/item-detail/create`}><button >Add an Item</button></Link>}
       { capsuleDetails && <CapsuleDetails capsuleDetails={capsuleDetails}/> }
+
 
     </div>
   )

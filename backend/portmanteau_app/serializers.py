@@ -17,6 +17,9 @@ class ItemSerializer(ModelSerializer):
     model = Item
     fields = ["id", "capsule", "type", "weather", "color_pattern", "brand", "image_url"] 
 
+  type = StringRelatedField()  
+  weather = StringRelatedField()
+
 class CapsuleSerializer(ModelSerializer):
   class Meta:
     model = Capsule

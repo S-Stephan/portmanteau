@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 
 // api
 import portmanteauAPI from "../api/portmanteauAPI"
@@ -23,7 +23,7 @@ const ItemDetailPage = (props) => {
       }
     }
     getItemDetails();
-  }, [])
+  }, [params.itemID])
 
 
   // renders
@@ -32,7 +32,10 @@ const ItemDetailPage = (props) => {
       <h2>Item Details</h2>
       <hr />
       { itemDetails && <ItemDetails itemDetails={itemDetails}/> }
-
+      <span>
+        { itemDetails && <Link to={`/capsule-list/${params.capsuleID}/item-detail/${params.itemID}/update`}><button>Edit Item</button></Link> }
+        { itemDetails && <Link to={`/capsule-list/${params.capsuleID}/item-detail/${params.itemID}/delete`}><button>Delete Item</button></Link>}
+      </span>
     </div>
   )
 }

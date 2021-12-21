@@ -2,7 +2,11 @@ const tryCatchFetch = async (url, init = null) => {
   try {
     const response = await fetch(url, init)
     if (response.ok) {
-      return await response.json()
+      if (response.status !== 204 ) {
+        return await response.json()
+      } else {
+        return response
+      }
     }
     else {
       throw new Error(`bad response: ${response.status} ${response.statusText}`) 
@@ -31,11 +35,50 @@ const fetchItemDetails = async (id) => {
   return await tryCatchFetch(url)
 }
 
+const addItem = async (itemObj) => {
+  let url = BASE_URL + `item/`
+  const paramsObj = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(itemObj) 
+  }
+  return await tryCatchFetch(url, paramsObj)
+}
+
+const updateItem = async (itemObj, id) => {
+  const url = BASE_URL + `item/${id}/`
+  const paramsObj = {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(itemObj)
+  }
+  return await tryCatchFetch(url, paramsObj)
+}
+
+
+const deleteItem = async (id) => {
+  let url = BASE_URL + `item/${id}`
+  const paramsObj = {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json"
+    }
+  }
+  return await tryCatchFetch(url, paramsObj)
+}
+
 
 const exportFunctions = {
   fetchCapsules,
   fetchCapsuleDetails,
-  fetchItemDetails
+  fetchItemDetails,
+  addItem,
+  updateItem,
+  deleteItem
 }
 
 export default exportFunctions;
