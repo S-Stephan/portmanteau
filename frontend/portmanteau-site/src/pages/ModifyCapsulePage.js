@@ -12,25 +12,35 @@ function ModifyCapsulePage(props) {
 
   // state
   const [initialCapsule, setInitialCapsule] = useState(null)
+  const [users, setUsers] = useState([])
+
+
+  // effects
   
-
-
-  // effect
   useEffect(()=> {
     const getCapsuleDetails = async () => {
       const data = await portmanteauAPI.fetchCapsuleDetails(params.capsuleID)
       if (data) {
         setInitialCapsule(data)
       }
-    }
-    getCapsuleDetails();
-  }, [])
+      } 
+      if (params.capsuleID) {
+        getCapsuleDetails(); 
+      }
+    }, [])
 
+    useEffect(()=> {
+      const getUsers = async () => {
+        const data = await portmanteauAPI.fetchUsers()
+        if (data) {
+          setUsers(data)
+        }
+        } 
+        getUsers(); 
+      }, [])
+  
   // derived values
   const action = initialCapsule ? "Update" : "Create"
-
-
-
 
   // handlers
   const handleFormSubmit = async (event) => {
@@ -44,7 +54,7 @@ function ModifyCapsulePage(props) {
 
     } 
    
-    // PUT request
+    // POST/PUT request
     const data =  initialCapsule
       ? await portmanteauAPI.updateCapsule(capsuleObj, initialCapsule.id)
       : await portmanteauAPI.addCapsule(capsuleObj)
@@ -52,7 +62,16 @@ function ModifyCapsulePage(props) {
       navigate(`capsule-list/${params.capsuleID}`) 
     }
   }
-  
+
+  // render helpers
+  const renderUsers = () => {
+    let elems = users.map((user, index) => {
+      return (
+        <option key={index}>{user.username}</option>
+      )
+    })
+    return elems
+  }
   
   // renders
   return (
@@ -61,14 +80,14 @@ function ModifyCapsulePage(props) {
       <hr />
       <form onSubmit={handleFormSubmit}>
         <label>Name: </label>
-        <input name='name' placeholder='ie. Winter' value={initialCapsule && initialCapsule.name}></input>
+        <input name='name' placeholder='ie. Winter' defaultValue={initialCapsule ? initialCapsule.name : ""}></input>
         <br />
         <label>Description: </label>
-        <input name='description' placeholder='Any notes you would like for your capsule go here.' value={initialCapsule && initialCapsule.description}></input>
+        <input name='description' placeholder='Any notes you would like for your capsule go here.' defaultValue={initialCapsule? initialCapsule.description : ""}></input>
         <br />
         <label>User: </label>
-        <select name="user" placeholder='User' value={initialCapsule && initialCapsule.user}>
-          <option>Get the user options from the backend</option>
+        <select name="user" placeholder='User' defaultValue={initialCapsule ? initialCapsule.user : ""}>
+          {renderUsers()}
         </select>
         <br />
         <button type="submit">{action} Capsule</button>

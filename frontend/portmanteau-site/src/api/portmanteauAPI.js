@@ -45,6 +45,11 @@ const fetchWeather = async () => {
   return await tryCatchFetch(url)
 }
 
+const fetchUsers = async () => {
+  let url = BASE_URL + "user/"
+  return await tryCatchFetch(url)
+}
+
 
 const fetchItemDetails = async (id) => {
   let url = BASE_URL + `item/${id}/`
@@ -129,6 +134,7 @@ const exportFunctions = {
   fetchItems,
   fetchTypes,
   fetchWeather,
+  fetchUsers,
   fetchItemDetails,
   addCapsule,
   updateCapsule,

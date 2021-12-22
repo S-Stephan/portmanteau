@@ -22,7 +22,9 @@ function ModifyItemPage(props) {
         setInitialItem(data)
       }
     }
-    getItemDetails();
+    if (params.itemID) {
+      getItemDetails();
+      }
   }, [params.itemID])
 
   useEffect(()=> {
@@ -39,7 +41,6 @@ function ModifyItemPage(props) {
     const getWeathers = async () => {
       const data = await portmanteauAPI.fetchWeather()
       if (data) {
-        console.log(data)
         setWeathers(data)
       }
     }
