@@ -20,7 +20,7 @@ function DeleteItem(props) {
       <div>
         <p>Are you sure you want to delete this item?</p>
         <button onClick={deleteItem}>Yes</button>
-        <button onClick={navigate(`/capsule-list/${params.capsuleID}/item-detail/${params.itemID}`)}>No</button>
+        <button onClick={() => {navigate(`/capsule-list/${params.capsuleID}/item-detail/${params.itemID}`)}}>No</button>
       </div>
     )
  

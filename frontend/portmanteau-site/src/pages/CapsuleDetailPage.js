@@ -33,7 +33,9 @@ const CapsuleDetailPage = (props) => {
       <hr/>
       <p>It's (insert weather here) today! Would you like your (insert clothing items here)?</p>
       <hr />
+      {capsuleDetails && <Link to={`/capsule-list/${params.capsuleID}/update`}><button >Update Capsule Info</button></Link>}
       {capsuleDetails && <Link to={`/capsule-list/${params.capsuleID}/item-detail/create`}><button >Add an Item</button></Link>}
+      {capsuleDetails && <Link to={`/capsule-list/${params.capsuleID}/delete`}><button >Delete this Capsule</button></Link>}
       { capsuleDetails && <CapsuleDetails capsuleDetails={capsuleDetails}/> }
 
 

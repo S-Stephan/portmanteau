@@ -8,6 +8,8 @@ r = DefaultRouter()
 #associate viewsets
 r.register(r"capsule", CapsuleViewSet, basename="capsule")
 r.register(r"item", ItemViewSet, basename="item")
+r.register(r"type", TypeViewSet, basename="type")
+r.register(r"weather", WeatherViewSet, basename="weather")
 
 #get urls
 urlpatterns = r.urls

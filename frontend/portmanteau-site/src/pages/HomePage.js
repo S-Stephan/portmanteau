@@ -14,7 +14,7 @@ const HomePage = (props) => {
         <p>Organize your wardrobe by building small capsule wardrobes using items you already own. Shop your closet and have fun mixing and matching!</p>
         <span>
         <Link to={'/capsule-list'}><button>See All Capsules</button></Link>
-        <Link to={'/create'}><button>Create a Capsule</button></Link>
+        <Link to={'/capsule-list/create'}><button>Create a Capsule</button></Link>
         </span>
     </div>
   )
