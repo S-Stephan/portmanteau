@@ -92,7 +92,7 @@ const deleteCapsule = async (id) => {
 }
 
 const addItem = async (itemObj) => {
-  let url = BASE_URL + `item/`
+  let url = BASE_URL + "item/"
   const paramsObj = {
     method: "POST",
     headers: {

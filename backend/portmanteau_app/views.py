@@ -19,5 +19,9 @@ class ItemViewSet(ModelViewSet):
   queryset = Item.objects.all()
   serializer_class = ItemSerializer
 
+class UserViewSet(ModelViewSet):
+  queryset = User.objects.all()
+  serializer_class = UserSerializer
+
 
 

@@ -5,7 +5,7 @@ function CapsuleDetails(props) {
   const renderItems = (items) => {
     return items.map((item, index) => {
       return (
-        <li key={index}>
+        <li key={index}>Image goes here too.
         <Link to={`/capsule-list/${item.capsule}/item-detail/${ item.id }`}>{ item.color_pattern + " " + item.brand }</Link></li>
         )
     })

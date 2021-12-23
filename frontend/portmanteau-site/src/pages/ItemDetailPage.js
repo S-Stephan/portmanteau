@@ -8,6 +8,7 @@ import portmanteauAPI from "../api/portmanteauAPI"
 import ItemDetails from "../components/ItemDetails";
 
 const ItemDetailPage = (props) => {
+  const { url } = props
   // states
   const [itemDetails, setItemDetails] = useState(null)
 
@@ -31,7 +32,7 @@ const ItemDetailPage = (props) => {
     <div>
       <h2>Item Details</h2>
       <hr />
-      { itemDetails && <ItemDetails itemDetails={itemDetails}/> }
+      { itemDetails && <ItemDetails itemDetails={itemDetails} url={url}/> }
       <span>
         { itemDetails && <Link to={`/capsule-list/${params.capsuleID}/item-detail/${params.itemID}/update`}><button>Edit Item</button></Link> }
         { itemDetails && <Link to={`/capsule-list/${params.capsuleID}/item-detail/${params.itemID}/delete`}><button>Delete Item</button></Link>}

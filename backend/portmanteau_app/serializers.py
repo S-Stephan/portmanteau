@@ -1,6 +1,10 @@
 from rest_framework.serializers import ModelSerializer, StringRelatedField
 from .models import *
 
+class UserSerializer(ModelSerializer):
+  class Meta:
+    model = User
+    fields = ["id", "username"]
 
 class TypeSerializer(ModelSerializer):
   class Meta:

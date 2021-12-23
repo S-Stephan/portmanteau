@@ -1,14 +1,45 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 
 // api
 import portmanteauAPI from '../api/portmanteauAPI';
 
 function ModifyItemPage(props) {
+  const { url, setUrl } = props
   // states
   const [initialItem, setInitialItem] = useState(null)
   const [types, setTypes] = useState([])
   const [weathers, setWeathers] = useState([])
+  const [image, setImage] = useState([])
+  
+  
+  const firstUpdate = useRef(true)
+
+  useEffect(()=> {
+     if (firstUpdate.current) {
+      firstUpdate.current = false
+      return;
+     }
+
+    const uploadImage = async () => {
+      try {
+        const data = new FormData();
+        data.append("file", image);
+        data.append("upload_preset", "s_images");
+        data.append("cloud_name", "s-stephan1");
+        const fetchData = await fetch("https://api.cloudinary.com/v1_1/s-stephan1/image/upload", {
+          method: "POST",
+          body: data,
+        });
+        const response = await fetchData.json();
+        setUrl(response.url)
+
+      } catch (e) {
+        console.log(e);
+      }
+    }; 
+    uploadImage(); 
+  }, [image])
 
   // router props
   const params = useParams()
@@ -55,26 +86,37 @@ function ModifyItemPage(props) {
   // handlers
   const handleFormSubmit = async (event) => {
     event.preventDefault()
-
+    console.log(url)
+    console.log(event.target)
     const itemObj = {
-      "color-pattern": event.target.elements[0].value,
-      "brand": event.target.elements[1].value,
-      "type": event.target.elements[2].value,
-      "weather": event.target.elements[3].value,
-      "capsule": params.capsuleID
+      // "color-pattern": event.target.elements[0].value,
+      // "brand": event.target.elements[1].value,
+      // "type": event.target.elements[2].value,
+      // "weather": event.target.elements[3].value,
+      // "capsule": params.capsuleID,
+      // "image_url": url
+      
+      capsule: "capsule4",
+      type: "type2",
+      weather: "weather3",
+      color_pattern: "color0" ,
+      brand: "brand1",
+      image_url: "url",
+
 
     } 
-    // PUT request
-    const data =  initialItem
-      ? await portmanteauAPI.updateItem(itemObj, initialItem.id)
-      : await portmanteauAPI.addItem(itemObj)
+    // POST/PUT request
+    const data = await portmanteauAPI.addItem(itemObj)
+    console.log(data)
+    //const data =  initialItem
+      //? await portmanteauAPI.updateItem(itemObj, initialItem.id)
+      //: await portmanteauAPI.addItem(itemObj)
     if (data) {
       navigate(`capsule-list/${params.capsuleID}/item-detail/${params.itemID}`) 
     }
+  }; 
 
-  }
 
-  
   // render helpers
   const renderTypes = () => {
     let elems = types.map((type, index) => {
@@ -93,6 +135,7 @@ function ModifyItemPage(props) {
     })
     return elems
   }
+
   // renders
   return (
     <div>
@@ -100,7 +143,7 @@ function ModifyItemPage(props) {
       <hr />
       <form onSubmit={handleFormSubmit}>
         <label>Color/Pattern: </label>
-        <input name='color-pattern' placeholder='ie. blue polka dot' defaultValue={initialItem && initialItem.color_pattern}></input>
+        <input name='color_pattern' placeholder='ie. blue polka dot' defaultValue={initialItem && initialItem.color_pattern}></input>
         <br />
         <label>Brand: </label>
         <input name='brand' placeholder='ie. Old Navy' defaultValue={initialItem && initialItem.brand}></input>
@@ -115,9 +158,9 @@ function ModifyItemPage(props) {
           { renderWeather() }
         </select>
         <br />
-        <p>Photo upload functionality will go here</p>
+        <input name="image_url" type="file" id="file-input" onChange={e => setImage(e.target.files[0])} placeholder="Upload Photo" defaultValue={initialItem && initialItem.photo_url} />
         <br />
-        <button type="submit">{action} Item</button>
+        <button type="submit" onClick={handleFormSubmit}>{action} Item</button>
       </form>
     </div>
   )
