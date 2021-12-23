@@ -86,31 +86,28 @@ function ModifyItemPage(props) {
   // handlers
   const handleFormSubmit = async (event) => {
     event.preventDefault()
-    console.log(url)
-    console.log(event.target)
+    
+    console.log(event)
     const itemObj = {
-      // "color-pattern": event.target.elements[0].value,
-      // "brand": event.target.elements[1].value,
-      // "type": event.target.elements[2].value,
-      // "weather": event.target.elements[3].value,
-      // "capsule": params.capsuleID,
-      // "image_url": url
-      
-      capsule: "capsule4",
-      type: "type2",
-      weather: "weather3",
-      color_pattern: "color0" ,
-      brand: "brand1",
-      image_url: "url",
-
-
+      capsule: params.capsuleID,
+      type: event.target.elements[2].value,
+      weather: event.target.elements[3].value,
+      color_pattern: event.target.elements[0].value,
+      brand: event.target.elements[1].value,
+      image_url: url
+      // capsule: 1,
+      // type: "type2",
+      // weather: "weather3",
+      // color_pattern: "color0" ,
+      // brand: "brand1",
+      // image_url: "url",
     } 
+    console.log(event.name)
     // POST/PUT request
-    const data = await portmanteauAPI.addItem(itemObj)
+    //const data = await portmanteauAPI.addItem(itemObj)
     console.log(data)
-    //const data =  initialItem
-      //? await portmanteauAPI.updateItem(itemObj, initialItem.id)
-      //: await portmanteauAPI.addItem(itemObj)
+    const data =  initialItem ? await portmanteauAPI.updateItem(itemObj, initialItem.id) : await portmanteauAPI.addItem(itemObj)
+
     if (data) {
       navigate(`capsule-list/${params.capsuleID}/item-detail/${params.itemID}`) 
     }

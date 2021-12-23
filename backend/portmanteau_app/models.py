@@ -35,9 +35,9 @@ class Item(models.Model):
   type = models.ForeignKey(Type, on_delete=models.SET_DEFAULT, related_name='items', default=1)
   weather = models.ForeignKey(Weather, on_delete=models.SET_NULL, related_name='items', null=True, blank=True)
   color_pattern = models.CharField(max_length=100)
-  brand = models.CharField(max_length=64, null=True, blank=True)
+  brand = models.CharField(max_length=64)
   # user will upload photo to cloudinary, its url will be stored here
-  image_url = models.URLField(null=True, blank=True)
+  image_url = models.TextField(max_length=2000)
 
   def __str__(self):
       return self.color_pattern + " " + self.type.name 
