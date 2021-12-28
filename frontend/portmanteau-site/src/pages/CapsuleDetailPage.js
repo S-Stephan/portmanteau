@@ -17,29 +17,23 @@ const CapsuleDetailPage = (props) => {
 
   // states
   const [capsuleDetails, setCapsuleDetails] = useState(null);
-  const [query, setQuery] = useState("");
+  const [city, setCity] = useState(null);
   const [weatherInfo, setWeatherInfo] = useState({});
 
   // router props
   const params = useParams()
 
   // effects
-  // search city and get weather
-  useEffect(() => {
-    const search = async (evt) => {
-      if (evt.key === "Enter") {
-        evt.preventDefault()
-        await fetch(`${weatherApi.base}weather?q${query}&units=imperial&APPID=${weatherApi.key}`)
-          .then(response => response.json())
-          .then(result => {
-            setQuery("");
-            setWeatherInfo(result);
-            console.log(result)
-          });
-      }
-    }
-    search()
-  }, []);
+
+   const getWeather = async () => {
+      await fetch(`${weatherApi.base}weather?q=${city}&units=imperial&APPID=${weatherApi.key}`)
+            .then(response => response.json())
+            .then(result => {
+               setWeatherInfo(result);
+            });
+      document.getElementById("city-info").value = null
+   }
+
 
   // capsule details
   useEffect(()=> {
@@ -70,7 +64,8 @@ const CapsuleDetailPage = (props) => {
       <div id="weather-info">
         <hr/>
         <p>Get weather info:</p>
-        <input type="text" placeholder="type city, press 'enter'" onChange={evt => setQuery(evt.target.value)} value={query} />
+        <input id="city-info" type="text" placeholder="type city here" onChange={(evt) => setCity(evt.target.value)} />
+        <button type="submit" onClick={getWeather}>Submit</button>
         {(typeof weatherInfo.main != "undefined") ? (
         <div>
           <div className="location">{weatherInfo && weatherInfo.name}</div>

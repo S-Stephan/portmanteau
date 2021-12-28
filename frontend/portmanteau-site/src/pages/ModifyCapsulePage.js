@@ -11,12 +11,13 @@ function ModifyCapsulePage(props) {
   const navigate = useNavigate()
 
   // state
-  const [initialCapsule, setInitialCapsule] = useState(null)
+  const [initialCapsule, setInitialCapsule] = useState({})
   const [users, setUsers] = useState([])
 
 
   // effects
-  
+
+  // gets the capsule details and sets the inital capsule value
   useEffect(()=> {
     const getCapsuleDetails = async () => {
       const data = await portmanteauAPI.fetchCapsuleDetails(params.capsuleID)
@@ -29,6 +30,7 @@ function ModifyCapsulePage(props) {
       }
     }, [])
 
+    // gets username information from User model for dropdown
     useEffect(()=> {
       const getUsers = async () => {
         const data = await portmanteauAPI.fetchUsers()
@@ -58,6 +60,7 @@ function ModifyCapsulePage(props) {
     const data =  initialCapsule
       ? await portmanteauAPI.updateCapsule(capsuleObj, initialCapsule.id)
       : await portmanteauAPI.addCapsule(capsuleObj)
+      console.log(capsuleObj)
     if (data) {
       navigate(`capsule-list/${params.capsuleID}`) 
     }
@@ -86,7 +89,7 @@ function ModifyCapsulePage(props) {
         <input name='description' placeholder='Any notes for this capsule go here.' defaultValue={initialCapsule? initialCapsule.description : ""}></input>
         <br />
         <label>User: </label>
-        <select name="user" placeholder='User' defaultValue={initialCapsule ? initialCapsule.user : ""}>
+        <select name="user" placeholder='User' defaultValue={initialCapsule ? initialCapsule.username : ""}>
           {renderUsers()}
         </select>
         <br />
