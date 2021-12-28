@@ -16,6 +16,7 @@ function App() {
   const [url, setUrl] = useState([])
   return (
     <div className="App">
+      <div className='top-box'></div>
       <BrowserRouter>
         <Routes>
           <Route exact path="/" element={<HomePage />} />

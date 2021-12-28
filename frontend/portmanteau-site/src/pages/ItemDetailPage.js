@@ -30,13 +30,18 @@ const ItemDetailPage = (props) => {
   // renders
   return (
     <div>
-      <h2>Item Details</h2>
-      <hr />
-      { itemDetails && <ItemDetails itemDetails={itemDetails} url={url}/> }
-      <span>
+      <span className="header-buttons">
         { itemDetails && <Link to={`/capsule-list/${params.capsuleID}/item-detail/${params.itemID}/update`}><button>Edit Item</button></Link> }
         { itemDetails && <Link to={`/capsule-list/${params.capsuleID}/item-detail/${params.itemID}/delete`}><button>Delete Item</button></Link>}
       </span>
+      <h2>Item Details</h2>
+      <div id="item-details">
+        <hr />
+        { itemDetails && <ItemDetails itemDetails={itemDetails} url={url}/> }
+        <hr/>
+      </div>
+        <p>Would you like some color suggestions for your capsule based on this item?</p>
+        <button>Click Here!</button>
     </div>
   )
 }

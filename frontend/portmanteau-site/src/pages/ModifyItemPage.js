@@ -11,7 +11,7 @@ function ModifyItemPage(props) {
   const [types, setTypes] = useState([])
   const [weathers, setWeathers] = useState([])
   const [image, setImage] = useState([])
-  
+  //const [url, setUrl] = useState("")
   
   const firstUpdate = useRef(true)
 
@@ -20,7 +20,8 @@ function ModifyItemPage(props) {
       firstUpdate.current = false
       return;
      }
-
+    
+    // fetch image url 
     const uploadImage = async () => {
       try {
         const data = new FormData();
@@ -87,7 +88,7 @@ function ModifyItemPage(props) {
   const handleFormSubmit = async (event) => {
     event.preventDefault()
     
-    console.log(event)
+    
     const itemObj = {
       capsule: params.capsuleID,
       type: event.target.elements[2].value,
@@ -95,21 +96,14 @@ function ModifyItemPage(props) {
       color_pattern: event.target.elements[0].value,
       brand: event.target.elements[1].value,
       image_url: url
-      // capsule: 1,
-      // type: "type2",
-      // weather: "weather3",
-      // color_pattern: "color0" ,
-      // brand: "brand1",
-      // image_url: "url",
+      
     } 
-    console.log(event.name)
+    
     // POST/PUT request
-    //const data = await portmanteauAPI.addItem(itemObj)
-    console.log(data)
     const data =  initialItem ? await portmanteauAPI.updateItem(itemObj, initialItem.id) : await portmanteauAPI.addItem(itemObj)
 
     if (data) {
-      navigate(`capsule-list/${params.capsuleID}/item-detail/${params.itemID}`) 
+      navigate(`/capsule-list/${params.capsuleID}`) 
     }
   }; 
 
@@ -138,7 +132,7 @@ function ModifyItemPage(props) {
     <div>
       <h2>{action} an Item</h2>
       <hr />
-      <form onSubmit={handleFormSubmit}>
+      <form className="form-style-1" onSubmit={handleFormSubmit}>
         <label>Color/Pattern: </label>
         <input name='color_pattern' placeholder='ie. blue polka dot' defaultValue={initialItem && initialItem.color_pattern}></input>
         <br />
@@ -155,9 +149,9 @@ function ModifyItemPage(props) {
           { renderWeather() }
         </select>
         <br />
-        <input name="image_url" type="file" id="file-input" onChange={e => setImage(e.target.files[0])} placeholder="Upload Photo" defaultValue={initialItem && initialItem.photo_url} />
+        <label className="cusotm-upload"><input name="image_url" type="file" id="file-input" onChange={e => setImage(e.target.files[0])} placeholder="Upload Photo" defaultValue={initialItem && initialItem.image_url} />Click me to Upload Photo</label>
         <br />
-        <button type="submit" onClick={handleFormSubmit}>{action} Item</button>
+        <button type="submit">{action} Item</button>
       </form>
     </div>
   )

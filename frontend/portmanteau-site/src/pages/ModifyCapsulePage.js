@@ -78,12 +78,12 @@ function ModifyCapsulePage(props) {
     <div>
       <h2>{action} a Capsule</h2>
       <hr />
-      <form onSubmit={handleFormSubmit}>
+      <form className="form-style-1" onSubmit={handleFormSubmit}>
         <label>Name: </label>
         <input name='name' placeholder='ie. Winter' defaultValue={initialCapsule ? initialCapsule.name : ""}></input>
         <br />
         <label>Description: </label>
-        <input name='description' placeholder='Any notes you would like for your capsule go here.' defaultValue={initialCapsule? initialCapsule.description : ""}></input>
+        <input name='description' placeholder='Any notes for this capsule go here.' defaultValue={initialCapsule? initialCapsule.description : ""}></input>
         <br />
         <label>User: </label>
         <select name="user" placeholder='User' defaultValue={initialCapsule ? initialCapsule.user : ""}>
