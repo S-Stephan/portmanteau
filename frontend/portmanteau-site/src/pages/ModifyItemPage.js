@@ -5,13 +5,12 @@ import { useParams, useNavigate } from 'react-router-dom';
 import portmanteauAPI from '../api/portmanteauAPI';
 
 function ModifyItemPage(props) {
-  const { url, setUrl } = props
   // states
   const [initialItem, setInitialItem] = useState(null)
   const [types, setTypes] = useState([])
   const [weathers, setWeathers] = useState([])
   const [image, setImage] = useState(null)
-  //const [url, setUrl] = useState("")
+  const [url, setUrl] = useState("")
   
   const firstUpdate = useRef(true)
 
@@ -96,7 +95,7 @@ function ModifyItemPage(props) {
       weather: event.target.elements[3].value,
       color_pattern: event.target.elements[0].value,
       brand: event.target.elements[1].value,
-      image_url: url
+      image_url: initialItem ? initialItem.image_url : url
       
     } 
     
@@ -111,10 +110,14 @@ function ModifyItemPage(props) {
 
 
   // render helpers
-  const renderTypes = () => {
+  const renderTypes = (defaultValue) => {
     let elems = types.map((type, index) => {
       return (
-        <option key={index} value={type.id}>{type.name}</option>
+        defaultValue == type.id 
+        ? <option key={index} value={type.id} selected>{type.name}</option>
+        : <option key={index} value={type.id}>{type.name}</option>
+
+      
       )
     })
     return elems
@@ -142,12 +145,12 @@ function ModifyItemPage(props) {
         <input name='brand' placeholder='ie. Old Navy' defaultValue={initialItem && initialItem.brand}></input>
         <br />
         <label>Type: </label>
-        <select name="type" placeholder='Type' defaultValue={initialItem && initialItem.type}>
-          { renderTypes() }
+        <select name="type" placeholder='Type' defaultValue={initialItem && initialItem.type.id}>
+          { renderTypes(initialItem && initialItem.type.id) }
         </select>
         <br />
         <label>Weather: </label>
-        <select name="weather" placeholder='Weather' defaultValue={initialItem && initialItem.weather}>
+        <select name="weather" placeholder='Weather' defaultValue={initialItem && initialItem.weather.id }>
           { renderWeather() }
         </select>
         <br />

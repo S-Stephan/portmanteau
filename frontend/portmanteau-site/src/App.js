@@ -13,7 +13,7 @@ import ModifyItemPage from "./pages/ModifyItemPage";
 import DeleteItemPage from "./pages/DeleteItemPage";
 
 function App() {
-  const [url, setUrl] = useState("")
+  
   return (
     <div className="App">
       <div className='top-box'></div>
@@ -22,12 +22,12 @@ function App() {
           <Route exact path="/" element={<HomePage />} />
           <Route exact path="/capsule-list/" element={<CapsuleListPage />} />
           <Route exact path="/capsule-list/:capsuleID" element={<CapsuleDetailPage />} />
-          <Route exact path="/capsule-list/:capsuleID/item-detail/:itemID" element={<ItemDetailPage url={url}/>} />
+          <Route exact path="/capsule-list/:capsuleID/item-detail/:itemID" element={<ItemDetailPage />} />
           <Route exact path="/capsule-list/create" element={<ModifyCapsulePage />} />
           <Route exact path="/capsule-list/:capsuleID/update" element={<ModifyCapsulePage />} />
           <Route exact path="/capsule-list/:capsuleID/delete" element={<DeleteCapsulePage />} />
-          <Route exact path="/capsule-list/:capsuleID/item-detail/create" element={<ModifyItemPage url={url} setUrl={setUrl}/>} />
-          <Route exact path="/capsule-list/:capsuleID/item-detail/:itemID/update" element={<ModifyItemPage url={url} setUrl={setUrl}/>} />
+          <Route exact path="/capsule-list/:capsuleID/item-detail/create" element={<ModifyItemPage />} />
+          <Route exact path="/capsule-list/:capsuleID/item-detail/:itemID/update" element={<ModifyItemPage />} />
           <Route exact path="/capsule-list/:capsuleID/item-detail/:itemID/delete" element={<DeleteItemPage />} />
         </Routes>
       </BrowserRouter>

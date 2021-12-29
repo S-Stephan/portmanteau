@@ -2,7 +2,6 @@
 
 
 function ItemDetails(props) {
-  const { url } = props 
    
   
   //renders
@@ -12,7 +11,7 @@ function ItemDetails(props) {
        <h3>Color/Pattern: { props.itemDetails.color_pattern }</h3>
        <h3>Brand: { props.itemDetails.brand }</h3>
         <p>This item is weather-appropriate for: { props.itemDetails.weather.name }</p>
-        <img width="200px" src={ url }></img>
+        <img width="200px" src={ props.itemDetails.image_url }></img>
     </div>
   )
 }
