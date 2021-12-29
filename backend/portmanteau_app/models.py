@@ -32,8 +32,8 @@ class Weather(models.Model):
 # the actual item of clothing itself
 class Item(models.Model):
   capsule = models.ForeignKey(Capsule, on_delete=models.CASCADE, related_name='items', null=True, blank=True)
-  type = models.ForeignKey(Type, on_delete=models.SET_DEFAULT, related_name='items', default=1)
-  weather = models.ForeignKey(Weather, on_delete=models.SET_NULL, related_name='items', null=True, blank=True)
+  type = models.ForeignKey(Type, on_delete=models.CASCADE, related_name='items', default=1)
+  weather = models.ForeignKey(Weather, on_delete=models.CASCADE, related_name='items', null=True, blank=True)
   color_pattern = models.CharField(max_length=100)
   brand = models.CharField(max_length=64)
   # user will upload photo to cloudinary, its url will be stored here

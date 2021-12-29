@@ -106,7 +106,7 @@ const addItem = async (itemObj) => {
 const updateItem = async (itemObj, id) => {
   const url = BASE_URL + `item/${id}/`
   const paramsObj = {
-    method: "PUT",
+    method: "PATCH",
     headers: {
       "Content-Type": "application/json"
     },

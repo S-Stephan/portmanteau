@@ -21,15 +21,23 @@ class ItemSerializer(ModelSerializer):
     model = Item
     fields = ["id", "capsule", "type", "weather", "color_pattern", "brand", "image_url"] 
 
-  type = StringRelatedField()  
-  weather = StringRelatedField()
+  def to_representation(self, instance):
+    self.fields["type"] = TypeSerializer()
+    self.fields["weather"] = WeatherSerializer()
+    return super().to_representation(instance)  
 
+  
 class CapsuleSerializer(ModelSerializer):
   class Meta:
     model = Capsule
     fields = ["id", "name", "description", "user", "items"]
 
-  items = ItemSerializer(many=True)
+  def to_representation(self, instance):
+    print(instance)
+    print(self.fields["items"])
+    self.fields["items"] = ItemSerializer(many=True)
+    return super().to_representation(instance)
+  
 
   
 

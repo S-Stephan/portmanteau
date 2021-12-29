@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useResolvedPath } from 'react-router-dom';
 
 // api
 import portmanteauAPI from '../api/portmanteauAPI';
@@ -11,7 +11,7 @@ function ModifyCapsulePage(props) {
   const navigate = useNavigate()
 
   // state
-  const [initialCapsule, setInitialCapsule] = useState({})
+  const [initialCapsule, setInitialCapsule] = useState(null)
   const [users, setUsers] = useState([])
 
 
@@ -52,6 +52,7 @@ function ModifyCapsulePage(props) {
       "name": event.target.elements[0].value,
       "description": event.target.elements[1].value,
       "user": event.target.elements[2].value,
+      "items": initialCapsule ? initialCapsule.items.map(elem => elem.id) : []
       // will eventually substitute this with the logged-in user
 
     } 
@@ -62,15 +63,17 @@ function ModifyCapsulePage(props) {
       : await portmanteauAPI.addCapsule(capsuleObj)
       console.log(capsuleObj)
     if (data) {
-      navigate(`capsule-list/${params.capsuleID}`) 
+      console.log("Data:", data)
+      navigate(`/capsule-list/${data.id}`) 
     }
   }
 
   // render helpers
   const renderUsers = () => {
+    //console.log(users)
     let elems = users.map((user, index) => {
       return (
-        <option key={index}>{user.username}</option>
+        <option key={index} value={user.id}>{user.username}</option>
       )
     })
     return elems

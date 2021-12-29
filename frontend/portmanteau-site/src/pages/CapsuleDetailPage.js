@@ -23,8 +23,8 @@ const CapsuleDetailPage = (props) => {
   // router props
   const params = useParams()
 
-  // effects
-
+  
+  // render helper
    const getWeather = async () => {
       await fetch(`${weatherApi.base}weather?q=${city}&units=imperial&APPID=${weatherApi.key}`)
             .then(response => response.json())
@@ -34,7 +34,7 @@ const CapsuleDetailPage = (props) => {
       document.getElementById("city-info").value = null
    }
 
-
+   // effects
   // capsule details
   useEffect(()=> {
     const getCapsuleDetails = async () => {

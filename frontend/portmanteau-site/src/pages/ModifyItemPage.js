@@ -10,7 +10,7 @@ function ModifyItemPage(props) {
   const [initialItem, setInitialItem] = useState(null)
   const [types, setTypes] = useState([])
   const [weathers, setWeathers] = useState([])
-  const [image, setImage] = useState([])
+  const [image, setImage] = useState(null)
   //const [url, setUrl] = useState("")
   
   const firstUpdate = useRef(true)
@@ -41,6 +41,7 @@ function ModifyItemPage(props) {
     }; 
     uploadImage(); 
   }, [image])
+
 
   // router props
   const params = useParams()
@@ -100,8 +101,9 @@ function ModifyItemPage(props) {
     } 
     
     // POST/PUT request
+    console.log(itemObj)
     const data =  initialItem ? await portmanteauAPI.updateItem(itemObj, initialItem.id) : await portmanteauAPI.addItem(itemObj)
-
+    
     if (data) {
       navigate(`/capsule-list/${params.capsuleID}`) 
     }
@@ -112,7 +114,7 @@ function ModifyItemPage(props) {
   const renderTypes = () => {
     let elems = types.map((type, index) => {
       return (
-        <option key={index}>{type.name}</option>
+        <option key={index} value={type.id}>{type.name}</option>
       )
     })
     return elems
@@ -121,7 +123,7 @@ function ModifyItemPage(props) {
   const renderWeather = () => {
     let elems = weathers.map((weather, index) => {
       return (
-        <option key={index}>{weather.name}</option>
+        <option key={index} value={weather.id}>{weather.name}</option>
       )
     })
     return elems

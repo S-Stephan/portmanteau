@@ -6,7 +6,7 @@ function CapsuleDetails(props) {
     return items.map((item, index) => {
       return (
         <li key={index}>
-        <Link to={`/capsule-list/${item.capsule}/item-detail/${ item.id }`}>{ item.color_pattern + " " + item.type }</Link></li>
+        <Link to={`/capsule-list/${item.capsule}/item-detail/${ item.id }`}>{ item.color_pattern + " " + item.type.name }</Link></li>
         )
     })
   }
