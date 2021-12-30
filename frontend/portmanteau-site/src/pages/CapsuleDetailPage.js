@@ -9,9 +9,8 @@ import portmanteauAPI from "../api/portmanteauAPI"
 import CapsuleDetails from "../components/CapsuleDetails";
 
 const CapsuleDetailPage = (props) => {
-  // api key MOVE THIS LATER!!!
   const weatherApi = {
-  key: "7ba948d2ea39b8159d47dc168b664752",
+  key: process.env.REACT_APP_WEATHER_API_KEY,
   base: "https://api.openweathermap.org/data/2.5/"
   }
 

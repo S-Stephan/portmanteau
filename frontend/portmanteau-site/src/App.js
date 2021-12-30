@@ -1,6 +1,5 @@
 import './App.css';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { useState } from 'react';
 
 //pages
 import HomePage from "./pages/HomePage";
@@ -13,7 +12,7 @@ import ModifyItemPage from "./pages/ModifyItemPage";
 import DeleteItemPage from "./pages/DeleteItemPage";
 
 function App() {
-  
+
   return (
     <div className="App">
       <div className='top-box'></div>

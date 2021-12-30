@@ -47,6 +47,7 @@ function ModifyItemPage(props) {
   const navigate = useNavigate()
 
   // effects
+  // gets item details from backend
   useEffect(()=> {
     const getItemDetails = async () => {
       const data = await portmanteauAPI.fetchItemDetails(params.itemID)
@@ -59,6 +60,7 @@ function ModifyItemPage(props) {
       }
   }, [params.itemID])
 
+  // fetches clothing types for dropdown
   useEffect(()=> {
     const getTypes = async () => {
       const data = await portmanteauAPI.fetchTypes()
@@ -69,6 +71,7 @@ function ModifyItemPage(props) {
     getTypes();
   }, [])
 
+  // fetches weather for dropdown
   useEffect(()=> {
     const getWeathers = async () => {
       const data = await portmanteauAPI.fetchWeather()
@@ -81,10 +84,13 @@ function ModifyItemPage(props) {
 
 
   // derived values
+
+  // if an initial item exists, use the word 'update' if not, use 'create'
   const action = initialItem ? "Update" : "Create"
 
 
   // handlers
+
   const handleFormSubmit = async (event) => {
     event.preventDefault()
     
@@ -113,7 +119,7 @@ function ModifyItemPage(props) {
   const renderTypes = (defaultValue) => {
     let elems = types.map((type, index) => {
       return (
-        defaultValue == type.id 
+        defaultValue === type.id 
         ? <option key={index} value={type.id} selected>{type.name}</option>
         : <option key={index} value={type.id}>{type.name}</option>
 
@@ -123,10 +129,12 @@ function ModifyItemPage(props) {
     return elems
   }
 
-  const renderWeather = () => {
+  const renderWeather = (defaultValue) => {
     let elems = weathers.map((weather, index) => {
       return (
-        <option key={index} value={weather.id}>{weather.name}</option>
+        defaultValue === weather.id
+        ? <option key={index} value={weather.id} selected>{weather.name}</option>
+        : <option key={index} value={weather.id}>{weather.name}</option>
       )
     })
     return elems
@@ -145,13 +153,13 @@ function ModifyItemPage(props) {
         <input name='brand' placeholder='ie. Old Navy' defaultValue={initialItem && initialItem.brand}></input>
         <br />
         <label>Type: </label>
-        <select name="type" placeholder='Type' defaultValue={initialItem && initialItem.type.id}>
+        <select name="type" placeholder='Type' >
           { renderTypes(initialItem && initialItem.type.id) }
         </select>
         <br />
         <label>Weather: </label>
-        <select name="weather" placeholder='Weather' defaultValue={initialItem && initialItem.weather.id }>
-          { renderWeather() }
+        <select name="weather" placeholder='Weather'>
+          { renderWeather(initialItem && initialItem.weather.id) }
         </select>
         <br />
         <label className="cusotm-upload"><input name="image_url" type="file" id="file-input" onChange={e => setImage(e.target.files[0])} placeholder="Upload Photo" defaultValue={initialItem && initialItem.image_url} />Click me to Upload Photo</label>

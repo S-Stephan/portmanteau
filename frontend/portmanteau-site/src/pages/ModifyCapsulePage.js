@@ -69,11 +69,13 @@ function ModifyCapsulePage(props) {
   }
 
   // render helpers
-  const renderUsers = () => {
+  const renderUsers = (defaultValue) => {
     //console.log(users)
     let elems = users.map((user, index) => {
       return (
-        <option key={index} value={user.id}>{user.username}</option>
+        defaultValue === user.id
+        ? <option key={index} value={user.id} selected>{user.username}</option>
+        : <option key={index} value={user.id}>{user.username}</option>
       )
     })
     return elems
@@ -92,8 +94,8 @@ function ModifyCapsulePage(props) {
         <input name='description' placeholder='Any notes for this capsule go here.' defaultValue={initialCapsule? initialCapsule.description : ""}></input>
         <br />
         <label>User: </label>
-        <select name="user" placeholder='User' defaultValue={initialCapsule ? initialCapsule.username : ""}>
-          {renderUsers()}
+        <select name="user" placeholder='User'>
+          {renderUsers(initialCapsule && initialCapsule.username)}
         </select>
         <br />
         <button type="submit">{action} Capsule</button>
